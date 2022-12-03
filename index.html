@@ -1,75 +1,91 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Sam Caldwell</title>
-	<link rel="stylesheet" type="text/css" href="/styles.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+  <head>
+    <title>Profile Website | Sam Caldwell</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<div class="container">
-		<div class="hero">
-			<h1 class="name"><strong>Sam</strong> Caldwell</h1>
-			<span class="job-title">Analyst</span>
-			<span class="email">notyet</span>
+    <!-- Keywords used in the website -->
+    <meta name="keywords" content="keywords to fill in">
 
-			<h2 class="lead">Find insights</h2>
-		</div>
-	</div>
+    <!-- Description for Website -->
+    <meta name="description" content="Sam Caldwell is data anlyst at LinkIt">
 
-<!-- Skills and Interests section -->
-	<div class="container">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:900|Raleway:300">
 
-		<div class="sections">
-			<h2 class="section-title">Skills</h2>
+   <!-- Bootstrap.css -->
+    <link type="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css">
 
-			<div class="list-card">
-				<span class="exp">+ 5 years</span>
-				<div>
-					<h3>SQL, Python, R</h3>
-					<span>etc …</span>
-				</div>
-			</div>
+    <!-- Scrolling Navbar -->
+    <link type="text/css" rel="stylesheet" href="assets/css/scrolling-nav.css">
 
-			<div class="list-card">
-				<span class="exp">+ 5 years</span>
-				<div>
-					<h3>Healthcare Analytics</h3>
-					<span>finding insights</span>
-				</div>
-			</div>
+  </head>
+  <!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
+  <body id="page-top" data-spy="scroll" data-target=".navbar fixed-top">
 
-			<div class="list-card">
-				<span class="exp">+ 5 years</span>
-				<div>
-					<h3>Looker</h3>
-					<span>dashboards</span>
-				</div>
-			</div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <!-- container div -->
+      <div class="container">
+        <div class="navbar-header page-scroll">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand page-scroll" href="#page-top">Sam Caldwell</a>
+        </div>
 
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#bio">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#resume">Services</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
 
-		</div>
-		<div class="sections">
-				<h2 class="section-title">Interests</h2>
+      </div>
+      <!--/ container -->
+    </nav>
 
-				<div class="list-card">
-					<div>
-						<h3>Skiing</h3>
-						<span>lots of it</span>
-					</div>
-				</div>
+    <!-- Intro Section -->
+    <section id="intro" class="intro-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Sam Caldwell</h1>
+                  <h3>Data Analyst at <a target="_blank" rel="noopener noreferrer" href="https://www1.linkit.com/">LinkIt</a></h3>
+                  <p>sam caldwell/p>
+                    <a class="btn btn-default page-scroll" href="#bio">Short Bio</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-				<div class="list-card">
-					<div>
-						<h3>Puzzles</h3>
-						<span>crosswords, chess</span>
-					</div>
-				</div>
-		</div>
-	</div>
+    <!-- Jquery -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
 
-	<br><br>
+    <!-- Bootstrap core js -->
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 
-
-</body>
+    <!--Scrolling Nav Javascript -->
+    <script type="text/javascript" src="assets/js/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="assets/js/scrolling-nav.js"></script>
+  </body>
 </html>
