@@ -1,79 +1,146 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="assets/css/menu.css">
-    <section class="p-menu1">
-      <nav id="navbar" class="navigation" role="navigation">
-        <input id="toggle1" type="checkbox" />
-        <label class="hamburger1" for="toggle1">
-          <div class="top"></div>
-          <div class="meat"></div>
-          <div class="bottom"></div>
-        </label>
+<head>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+  }
 
-        <nav class="menu1">
-          <a class="link1" href="http://www.samuelcaldwell.com/#fragment">Experience</a>
-          <a class="link1" href="">Specialties</a>
-          <a class="link1" href="">About</a>
-          <a class="link1" href="">Blog</a>
-        </nav>
+  header {
+    background-color: #39648f;
+    color: #fff;
+    padding: 20px;
+  }
+
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+  }
+
+  nav li {
+    margin-right: 20px;
+  }
+
+  nav a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  a{
+  text-decoration: none;
+  color: #39648f;
+  }
+
+  a:visited{
+  text-decoration: none;
+  color: #39648f;
+  }
+
+  main {
+    padding: 20px;
+  }
+
+  section {
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .styleone:link {
+  	text-decoration: none;
+  	color: #FFF;
+    background-color: #39648f;
+  }
+  .styleone:visited {
+  	text-decoration: none;
+  	color: #FFF;
+    background-color: #39648f;
+  }
+  .styleone:hover {
+  	text-decoration: none;
+  	color: #FFF;
+    background-color: #39648f;
+  }
+  .styleone:focus {
+  	text-decoration: none;
+  	color: #FFF;
+    background-color: #39648f;
+  }
+  .styleone:active {
+  	text-decoration: underline;
+  	color: #FFF;
+    background-color: #39648f;
+  }
+
+  @media (max-width: 600px) {
+    nav ul {
+      flex-direction: column;
+    }
+  }
+</style>
+
+  <title>Sam Caldwell</title>
+</head>
+<body>
+  <header>
+    <h1>Sam Caldwell</h1>
+    <nav>
+      <ul>
+        <li><a href="#about" class="styleone">About</a></li>
+        <li><a href="#experience" class="styleone">Experience</a></li>
+        <li><a href="#skills" class="styleone">Skills</a></li>
+        <li><a href="#education" class="styleone">Education</a></li>
+        <li><a href="#interests" class="styleone">Interests</a></li>
+      </ul>
     </nav>
+  </header>
+  <main>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>Hi, I'm Sam. I'm passionate about healthcare, analytics, and data visualization.
+        I love using data to tell stories and help others understand complex information.
+        When I'm not working, you can find me skiing or trying out new recipes in the kitchen.
+        Thanks for visiting my website!</p>
     </section>
-    <title>Sam Caldwell</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Keywords used in the website -->
-    <meta name="keywords" content="keywords to fill in">
-
-    <!-- Description for Website -->
-    <meta name="description" content="Sam Caldwell personal website">
-
-    <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:900|Raleway:300">
-
-   <!-- Bootstrap.css -->
-    <link type="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css">
-
-    <!-- Scrolling Navbar -->
-    <link type="text/css" rel="stylesheet" href="assets/css/scrolling-nav.css">
-  </head>
-
-
-  <!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
-  <body id="page-top" data-spy="scroll" data-target=".navbar fixed-top">
-    <!-- Intro Section -->
-    <section id="intro" class="intro-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Sam Caldwell</h1>
-                  <h3>Insights @ <a target="_blank" rel="noopener noreferrer" href="https://www.capsule.com/">Capsule</a></h3>
-                  <h3>Data @ <a target="_blank" rel="noopener noreferrer" href="https://www.linkit.com/">LinkIt</a></h3>
-                  <h3>Analytics @ <a target="_blank" rel="noopener noreferrer" href="https://www.athenahealth.com/">athenahealth</a></h3>
-                </div>
-            </div>
-        </div>
+    <section id="experience">
+      <h2>Experience</h2>
+      <h3>Insights Analyst @ <a target="_blank" rel="noopener noreferrer" href="https://www.capsule.com/"  style="text-decoration: none">Capsule</a></h3>
+      <p>I manage reporting and analysis of KPIs as well as ad-hoc analyses for the Executive and Expansion teams.</p>
+      <h3>Data Analyst @ <a target="_blank" rel="noopener noreferrer" href="https://www.linkit.com/"  style="text-decoration: none"> LinkIt! </a></h3>
+      <p>I created analyses for clients to show high-level trends, perform cohort analyses, and identify at-risk students relative to test performances and demographic data.</p>
+      <h3>Business Analyst Intern @ <a target="_blank" rel="noopener noreferrer" href="https://www.athenahealth.com/"  style="text-decoration: none"> athenahealth </a></h3>
+      <p>I created competitive analyses and automated monthly reporting.</p>
     </section>
-    <section>
-      <div id="fragment">
-        <h1>New Section</h1>
-      </div>
+    <section id="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+        <li>jQuery</li>
+        <li>Responsive Design</li>
+      </ul>
     </section>
-
-    <!-- Jquery -->
-    <script type="text/javascript" src="assets/js/jquery.js"></script>
-
-    <!-- Bootstrap core js -->
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-
-    <!--Scrolling Nav Javascript -->
-    <script type="text/javascript" src="assets/js/jquery.easing.min.js"></script>
-    <script type="text/javascript" src="assets/js/scrolling-nav.js"></script>
-
-
-
-
-  </body>
-</html>
+    <section id="education">
+      <h2>Education</h2>
+      <h3>Bachelor's Degree in Neuroscience, Middlebury College</h3>
+      <p>Sample coursework: Information Visualization, Data Structures, Categorical Data Analysis, Health Policy in Action.</p>
+    </section>
+    <section id="interests">
+      <h2>Interests</h2>
+      <p>I enjoy crossword puzzles, skiing, and listening to podcasts.</p>
+    </section>
