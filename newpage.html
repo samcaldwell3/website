@@ -2,80 +2,41 @@
 <html>
 <head>
   <style>
-    /* Add some styling to make the puzzle look nice */
-    #crossword {
-      width: 400px;
-      height: 400px;
-      border: 1px solid black;
+    table {
+      border-collapse: collapse;
+      font-family: Calibri, sans-serif;
+      border: 3px solid black;
+    }
+    td {
+      border: solid thin;
+      height: 2.4em;
+      width: 2.4em;
+      text-align: top;
+      vertical-align: top;
+      padding: 0;
+      color: black;
     }
 
-    #crossword td {
-      width: 50px;
-      height: 50px;
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    #crossword td.down {
-      background-color: lightgreen;
-    }
-
-    #crossword input {
-      width: 50px;
-      height: 50px;
-      text-align: center;
-    }
   </style>
 </head>
 <body>
-  <table id="crossword">
-    <tr>
-      <td></td>
-      <td class="down">1</td>
-      <td class="down">2</td>
-      <td class="down">3</td>
-      <td class="down">4</td>
-
-    </tr>
-    <tr>
-      <td class="down">1</td>
-      <td class="down">2</td>
-      <td class="down">3</td>
-      <td class="down">2</td>
-      <td class="down">2</td>
-    </tr>
-    <tr>
-      <td class="down">2</td>
-      <td class="down">1</td>
-      <td class="down">2</td>
-      <td class="down">3</td>
-      <td class="down">2</td>
-    </tr>
-    <tr>
-      <td class="down">2</td>
-      <td class="down">1</td>
-      <td class="down">2</td>
-      <td class="down">3</td>
-      <td class="down">2</td>
-    </tr>
-    <tr>
-      <td class="down">2</td>
-      <td class="down">1</td>
-      <td class="down">2</td>
-      <td class="down">3</td>
-      <td class="down">2</td>
-    </tr>
-  </table>
-
-  <script>
-    // Use JavaScript to create input fields for each blank space in the puzzle
-    let cells = document.querySelectorAll('#crossword td:not(:empty)');
-    for (let i = 0; i < cells.length; i++) {
-      let cell = cells[i];
-      let input = document.createElement('input');
-      input.type = 'text';
-      cell.appendChild(input);
-    }
-  </script>
+  <table>
+  <caption>Crossword Grid</caption>
+<tr> <td>1  <td>2  <td>3  <td>4  <td style="background-color: black;">  <td>5  <td>6  <td>7  <td style="background-color: black;"> <td>8 <td>9 <td>10 <td>11 <td>12 <td>13
+<tr> <td>14  <td>  <td>  <td>  <td style="background-color: black;">  <td>15  <td>  <td>  <td style="background-color: black;"> <td>16 <td> <td> <td> <td> <td>
+<tr> <td>17  <td>  <td>  <td>  <td style="background-color: black;">  <td>18  <td>  <td>  <td style="background-color: black;"> <td>19 <td> <td> <td> <td> <td>
+<tr> <td style="background-color: black;">  <td>20  <td>  <td>  <td>  <td>  <td>  <td>  <td> <td> <td style="background-color: black;"> <td>21 <td> <td> <td>
+<tr> <td style="background-color: black;">  <td style="background-color: black;">  <td>  <td>  <td>  <td>  <td style="background-color: black;">  <td>  <td> <td> <td> <td> <td> <td> <td>
+<tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td style="background-color: black;">  <td> <td> <td> <td> <td style="background-color: black;"> <td style="background-color: black;"> <td style="background-color: black;">
+<tr> <td>  <td>  <td>  <td>  <td style="background-color: black;">  <td>  <td>  <td>  <td> <td> <td> <td style="background-color: black;"> <td> <td> <td>
+<tr> <td>  <td>  <td>  <td>  <td>  <td style="background-color: black;">  <td>  <td>  <td> <td style="background-color: black;"> <td> <td> <td> <td> <td>
+<tr> <td>  <td>  <td>  <td style="background-color: black;">  <td>  <td>  <td>  <td>  <td> <td> <td style="background-color: black;"> <td> <td> <td> <td>
+<tr> <td style="background-color: black;">  <td style="background-color: black;">  <td style="background-color: black;">  <td>  <td>  <td>  <td>  <td style="background-color: black;">  <td> <td> <td> <td> <td> <td> <td>
+<tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td style="background-color: black;"> <td> <td> <td> <td> <td style="background-color: black;"> <td style="background-color: black;">
+<tr> <td>  <td>  <td>  <td>  <td style="background-color: black;">  <td>  <td>  <td>  <td> <td> <td> <td> <td> <td> <td style="background-color: black;">
+<tr> <td>  <td>  <td>  <td>  <td>  <td>  <td style="background-color: black;">  <td>  <td> <td> <td style="background-color: black;"> <td> <td> <td> <td>
+<tr> <td>  <td>  <td>  <td>  <td>  <td>  <td style="background-color: black;">  <td>  <td> <td> <td style="background-color: black;"> <td> <td> <td> <td>
+<tr> <td>  <td>  <td>  <td>  <td>  <td>  <td style="background-color: black;">  <td>  <td> <td> <td style="background-color: black;"> <td> <td> <td> <td>
+</table>
 </body>
 </html>
