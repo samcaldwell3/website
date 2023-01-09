@@ -4,51 +4,44 @@
 <head>
   <style>
 
-  * {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.anim-typewriter{
-  animation: typewriter 4s steps(44) 1s 1 normal both,
-             blinkTextCursor 500ms steps(44) infinite normal;
-}
-@keyframes typewriter{
-  from{width: 0;}
-  to{width: 24em;}
-}
-@keyframes blinkTextCursor{
-  from{border-right-color: rgba(255,255,255,.75);}
-  to{border-right-color: transparent;}
-}
-.line-1{
-    position: relative;
-    top: 50%;
-    width: 24em;
-    margin: 0 auto;
-    border-right: 2px solid rgba(255,255,255,.75);
-    font-size: 180%;
-    text-align: center;
-    white-space: nowrap;
+  html{
+    min-height: 100%;
     overflow: hidden;
-    transform: translateY(-50%);
-}
-body {
-  font-family: 'Noto Sans', sans-serif;
-  font-size: 12px;
-}
+  }
+  body{
+    height: calc(100vh - 8em);
+    padding: 4em;
+    color: rgb(255, 255, 255);
+    font-family: 'Anonymous Pro', monospace;
+    background-color: rgb(25,25,25);
+  }
+  .line-1{
+      position: relative;
+      top: 50%;
+      width: 24em;
+      margin: 0 auto;
+      border-right: 2px solid rgba(255,255,255,.75);
+      font-size: 180%;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      transform: translateY(-50%);
+  }
 
-.clearfix {
-  overflow: auto;
-}
+  /* Animation */
+  .anim-typewriter{
+    animation: typewriter 4s steps(44) 1s 1 normal both,
+               blinkTextCursor 500ms steps(44) infinite normal;
+  }
+  @keyframes typewriter{
+    from{width: 0;}
+    to{width: 24em;}
+  }
+  @keyframes blinkTextCursor{
+    from{border-right-color: rgba(255,255,255,.75);}
+    to{border-right-color: transparent;}
+  }
 
-
-#wrapper {
-  position:relative;
-  max-width: 800px;
-  margin: 42px auto;
-}
 
 
 a {
@@ -64,18 +57,6 @@ nav a:link {
   display:block;
 }
 
-h1 {
-  position: absolute;
-  text-align: center;
-  width:100%;
-  font-size:36px;
-  margin:0px 0px 8px 0px;
-}
-
-h2 {
-  font-family: 'Noto Sans', sans-serif;
-  font-size:16px;
-}
 
 #internal {
   clear:left;
