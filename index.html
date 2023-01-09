@@ -1,158 +1,134 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html>
 <head>
   <style>
-  body {
-    font-family: Arial, sans-serif;
-    color: #333;
-    background-color: #fff;
-    margin: 0;
-    padding: 0;
-  }
 
-  h1 {
-    margin: 0;
-    padding: 0;
-  }
+  * {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
 
-  nav {
+.anim-typewriter{
+  animation: typewriter 4s steps(44) 1s 1 normal both,
+             blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter{
+  from{width: 0;}
+  to{width: 24em;}
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: rgba(255,255,255,.75);}
+  to{border-right-color: transparent;}
+}
+.line-1{
+    position: relative;
+    top: 50%;
+    width: 24em;
+    margin: 0 auto;
+    border-right: 2px solid rgba(255,255,255,.75);
+    font-size: 180%;
+    text-align: center;
+    white-space: nowrap;
     overflow: hidden;
-    background-color: #39648f;
-    position: fixed;
-    padding: 20px;
-    top: 0;
-    width: 100%;
-    color: #fff;
-  }
+    transform: translateY(-50%);
+}
+body {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 12px;
+}
 
-  nav ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-  }
+.clearfix {
+  overflow: auto;
+}
 
-  nav li {
-    margin-right: 20px;
-  }
 
-  nav a {
-    color: #fff;
-    text-decoration: none;
-  }
+#wrapper {
+  position:relative;
+  max-width: 800px;
+  margin: 42px auto;
+}
 
-  a{
-  text-decoration: none;
-  color: #39648f;
-  }
 
-  a:visited{
-  text-decoration: none;
-  color: #39648f;
-  }
+a {
+  text-decoration:none;
+  color:#333333;
+}
 
-  main {
-    margin-top: 100px;
-    padding: 20px;
-  }
+a:hover {
+  color:#BBBBBB;
+}
 
-  section {
-    margin-bottom: 20px;
-  }
+nav a:link {
+  display:block;
+}
 
-  h2 {
-    margin: 0;
-    padding: 0;
-  }
+h1 {
+  position: absolute;
+  text-align: center;
+  width:100%;
+  font-size:36px;
+  margin:0px 0px 8px 0px;
+}
 
-  .styleone:link {
-  	text-decoration: none;
-  	color: #FFF;
-    background-color: #39648f;
-  }
-  .styleone:visited {
-  	text-decoration: none;
-  	color: #FFF;
-    background-color: #39648f;
-  }
-  .styleone:hover {
-  	text-decoration: none;
-  	color: #FFF;
-    background-color: #39648f;
-  }
-  .styleone:focus {
-  	text-decoration: none;
-  	color: #FFF;
-    background-color: #39648f;
-  }
-  .styleone:active {
-  	text-decoration: underline;
-  	color: #FFF;
-    background-color: #39648f;
-  }
+h2 {
+  font-family: 'Noto Sans', sans-serif;
+  font-size:16px;
+}
 
-  @media (max-width: 600px) {
-    nav ul {
-      flex-direction: column;
-    }
-  }
-</style>
+#internal {
+  clear:left;
+  float:left;
+  width:16%;
+  margin-top: 58px;
+  text-align:center;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.content {
+  float:left;
+  clear:right;
+  width:84%;
+  padding-right:32px;
+  margin-top:8px;
+  font-family: 'Noto Serif', serif;
+}
+
+  </style>
+
 
   <title>Sam Caldwell</title>
+  <meta charset="UTF-8">
+  <meta name="author" content="Sam Caldwell">
+  <meta name="keywords" content="sam caldwell, insights, middlebury, capsule, linkit, new york, nyc">
+  <meta name="description" content="Personal projects, links, etc. by Sam Caldwell.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="//fonts.googleapis.com/css?family=Noto+Sans:400,700|Noto+Serif" rel="stylesheet" type="text/css">
+  <link href="animate.css" rel="stylesheet" type="text/css" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-  <header>
-    <nav>
-      <h1><a href="" class="styleone"</a> Sam Caldwell</h1>
-      <ul>
-        <li><a href="#about" class="styleone">About</a></li>
-        <li><a href="#experience" class="styleone">Experience</a></li>
-        <li><a href="#skills" class="styleone">Skills</a></li>
-        <li><a href="#education" class="styleone">Education</a></li>
-        <li><a href="#interests" class="styleone">Interests</a></li>
-      </ul>
+
+  <div id="wrapper">
+
+    <header id="header_id">
+
+      <h1 class="line-1 anim-typewriter">Sam Caldwell</h1>
+
+    </header>
+
+    <nav id="internal">
+
+      <a href="#" id="about">About</a>
+      <a href="#" id="contact">Contact</a>
+      <a href="/resume">Resume</a>
+      <br />
+      <a href="https://www.linkedin.com/in/samuelmcaldwell/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/samcaldwell3" target="_blank" rel="noopener noreferrer">Github</a>
     </nav>
-  </header>
-  <main>
-    <section id="about">
-      <h2>About Me</h2>
-      <p>Hi, I'm Sam. I'm passionate about healthcare, analytics, and data visualization.
-        I love using data to tell stories and help others understand complex information.
-        When I'm not working, you can find me skiing or trying out new recipes in the kitchen.
-        Thanks for visiting my website!</p>
-    </section>
-    <section id="experience">
-      <h2>Experience</h2>
-      <h3>Insights Analyst @ <a target="_blank" rel="noopener noreferrer" href="https://www.capsule.com/"  style="text-decoration: none">Capsule</a></h3>
-      <p>I manage reporting and analysis of KPIs as well as ad-hoc analyses for the Executive and Expansion teams.</p>
-      <h3>Data Analyst @ <a target="_blank" rel="noopener noreferrer" href="https://www.linkit.com/"  style="text-decoration: none"> LinkIt! </a></h3>
-      <p>I created analyses for clients to show high-level trends, perform cohort analyses, and identify at-risk students relative to test performances and demographic data.</p>
-      <h3>Business Analyst Intern @ <a target="_blank" rel="noopener noreferrer" href="https://www.athenahealth.com/"  style="text-decoration: none"> athenahealth </a></h3>
-      <p>I created competitive analyses and automated monthly reporting.</p>
-      <h3>Intern @ <a target="_blank" rel="noopener noreferrer" href="https://www.uvmhealth.org/"  style="text-decoration: none"> UVM Health Network </a></h3>
-      <p>I researched value-based care and created Excel models.</p>
-    </section>
-    <section id="skills">
-      <h2>Skills</h2>
-      <ul>
-        <li>SQL</li>
-        <li>Python</li>
-        <li>Looker</li>
-        <li>Salesforce</li>
-        <li>Excel</li>
-      </ul>
-    </section>
-    <section id="education">
-      <h2>Education</h2>
-      <h3>Bachelor's Degree in Neuroscience, Middlebury College</h3>
-      <p>Sample coursework: Information Visualization, Data Structures, Categorical Data Analysis, Health Policy in Action.</p>
-    </section>
-    <section id="interests">
-      <h2>Interests</h2>
-      <p>I enjoy crossword puzzles, skiing, and listening to podcasts.</p>
-      <a href="newpage.html">My New Page</a>
-    </section>
-  </main>
+  </div>
 </body>
 </html>
