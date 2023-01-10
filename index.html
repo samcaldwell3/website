@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -30,23 +29,21 @@
 
   /* Animation */
   .anim-typewriter{
-    animation: typewriter 4s steps(44) 1s 1 normal both,
+    animation: typewriter 2s steps(22) 1s 1 normal both,
                blinkTextCursor 500ms steps(44) infinite normal;
   }
   @keyframes typewriter{
     from{width: 0;}
-    to{width: 24em;}
+    to{width: 7em;}
   }
   @keyframes blinkTextCursor{
     from{border-right-color: rgba(255,255,255,.75);}
     to{border-right-color: transparent;}
   }
 
-
-
 a {
   text-decoration:none;
-  color:#333333;
+  color:#a1a1a1;
 }
 
 a:hover {
@@ -67,15 +64,13 @@ nav a:link {
   font-family: 'Noto Sans', sans-serif;
 }
 
-.content {
-  float:left;
-  clear:right;
-  width:84%;
-  padding-right:32px;
-  margin-top:8px;
-  font-family: 'Noto Serif', serif;
+.text-center {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Noto Sans', sans-serif;
 }
-
   </style>
 
 
@@ -103,13 +98,21 @@ nav a:link {
 
     <nav id="internal">
 
-      <a href="#" id="about">About</a>
-      <a href="#" id="contact">Contact</a>
+      <a href="/" id="about">About</a>
+      <a href = "mailto: samcaldwell333@gmail.com" id="contact">Contact</a>
       <a href="/resume">Resume</a>
       <br />
       <a href="https://www.linkedin.com/in/samuelmcaldwell/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a href="https://github.com/samcaldwell3" target="_blank" rel="noopener noreferrer">Github</a>
     </nav>
+
+
+  </div>
+
+  <div id="text-block" class="text-center">
+    <p>Hi, I'm Sam. I'm passionate about healthcare, analytics, and data visualization.
+      I love using data to tell stories and help others understand complex information.
+      When I'm not working, you can find me skiing or trying out new recipes in the kitchen. Thanks for visiting my website!</p>
   </div>
 </body>
 </html>
