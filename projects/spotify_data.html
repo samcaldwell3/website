@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>The Weeknd</title>
+    <h1 id="header">Quantifying The Weeknd's "Energy" Using Spotify Data</h1>
+    <p id="subheader">Sam Caldwell</p>
+    <div id="input">
+        Color Encodings:
+        <input  type='radio' id="duration" name="mode" checked>Duration</input>
+        <input type='radio' id="album" name="mode">Album</input>
+        <input type='radio' id="wc" name="mode">Danceability</input>
+        <input type='radio' id="ld" name="mode">Lyrical Density</input>
+    </div>
+    <div>
+      <svg id="chart1"></svg>
+      <svg id="chart2"></svg>
+      <svg id="chart3"></svg>
+      <svg id="chart4"></svg>
+    </div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <style type="text/css">
+
+    .deselected{
+            fill:lightgray !important;
+        }
+    #header{
+        font-family: sans-serif;
+        font-size:30px;
+        margin-left: 10px;
+    }
+    #subheader{
+        font-family: sans-serif;
+        font-size:16px;
+        margin-left: 10px;
+        margin-top: -10px;
+    }
+    #input{
+        font-family: sans-serif;
+        font-size:14px;
+        padding: 10px;
+        margin-bottom: 10px;
+        margin-top: -10px;
+    }
+    #tooltip.hidden{
+        display:none;
+    }
+    #tooltip{
+        position:absolute;
+        width:150px;
+        height:auto;
+        padding:10px;
+        background-color: ivory;
+        border-radius:10px;
+        box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+        pointer-events: none;
+    }
+
+    #tooltip p{
+        margin:0;
+        font-family: sans-serif;
+        font-size:12px;
+    }
+
+    </style>
+</head>
+<body>
+    <svg id="vis"></svg>
+    <div id="tooltip", class = "hidden">
+        <p>
+        Song: <span id="track_name"></span><br />
+        Album: <span id="album_name"></span><br />
+        </p>
+    </div>
+    <script>
+
+      d3.csv("https://www.samuelcaldwell.com/csvs/theweeknd.csv").then(function(dataset){
+      data=dataset.slice(0)
+
+      console.log("data")
+      console.log(data)
+
+
+
+      let working_album_data = d3.nest()
+        .key((d) => d.album_name)
+        .entries(data)
+
+      // holds album name and average gloom index
+      let album_data = [];
+
+      // create an array for coloring the bars
+      let bar_extent;
+      let bar_data = [];
+
+      let album_order = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      // loops through all 9 albums
+      for(let i = 0; i < working_album_data.length; i ++){
+        let ave = 0;
+        let tot = 0;
+        let aveD = 0;
+        let totD = 0;
+        let aveW = 0;
+        let totW = 0;
+        let aveL = 0;
+        let totL = 0;
+        let aveA = 0;
+
+        // loops through songs on each album
+        // ave gloom index
+        for(let j = 0; j< working_album_data[i].values.length; j++){
+          tot += +working_album_data[i].values[j].energy;
+          ave = +tot/(j+1);
+        }
+        // ave duration_ms
+        for(let j = 0; j< working_album_data[i].values.length; j++){
+          totD += +working_album_data[i].values[j].duration_ms;
+          aveD = +totD/(j+1);
+        }
+        for(let j = 0; j< working_album_data[i].values.length; j++){
+          totW += +working_album_data[i].values[j].danceability;
+          aveW= +totW/(j+1);
+        }
+        for(let j = 0; j< working_album_data[i].values.length; j++){
+          totL += +working_album_data[i].values[j].lyrical_density;
+          aveL= +totL/(j+1);
+        }
+        for(let j = 0; j< working_album_data[i].values.length; j++){
+          aveA = +working_album_data[i].values[j].album_release_year;
+        }
+
+
+        album_data.push({Name: working_album_data[i].key, AveGI: ave, AveD: aveD, AveW: aveW, AveL: aveL, AveA: aveA})
+      }
+      console.log(album_data)
+
+/*
+      margins/widths/heights
+*/
+      const margins = {top:10, bottom:50, left:100, right:10};
+      const width = 300;
+      const width4 = width*3;
+      const height = 300;
+      const height4 = 200;
+
+
+      d3.select("#input").on("click", function(d){
+        update_colors()
+        update_vis()
+        update_colors()
+      })
+/*
+      scales 1
+*/
+      let radio = document.getElementsByName("mode")
+      let minDur = d3.min(data, (d) => +d.duration_ms)
+      let medDur = d3.median(data, (d) => +d.duration_ms)
+      let maxDur = d3.max(data, (d) => +d.duration_ms)
+      let minWc = d3.min(data, (d) => +d.danceability)
+      let medWc = d3.median(data, (d) => +d.danceability)
+      let maxWc = d3.max(data, (d) => +d.danceability)
+      let minLd = d3.min(data, (d) => +d.lyrical_density)
+      let medLd = d3.median(data, (d) => +d.lyrical_density)
+      let maxLd = d3.max(data, (d) => +d.lyrical_density)
+
+      const x_scale1 = d3.scaleLinear()
+        .range([0, width])
+        .domain([0, d3.max(data, (d) => +d.energy)])
+
+      const x_scale2 = d3.scaleLinear()
+        .range([0, width])
+        .domain([0, d3.max(data, (d) => +d.valence)])
+
+      const x_scale3 = d3.scaleLinear()
+        .range([0, width])
+        .domain([0, d3.max(data, (d) => +d.acousticness)])
+
+      const x_scale4 = d3.scaleLinear()
+        .range([0, width4])
+        .domain([0, d3.max(album_data, (d)=>d.AveGI)])
+
+      console.log(d3.max(data, (d) => +d.energy))
+
+      const y_scale1 = d3.scaleLinear()
+      const y_scale2 = d3.scaleLinear()
+      const y_scale3 = d3.scaleLinear()
+      const y_scale4 = d3.scaleBand()
+        .range([0, height4])
+        .domain(album_data.map((d)=>d.Name))
+        .padding(0.1);
+
+      const svg1 = d3.select("#chart1")
+        .attr("width", width + margins.right + margins.left)
+        .attr("height", height + margins.top + margins.bottom);
+
+      const chart1 = svg1.append("g")
+        .attr("transform", `translate(${margins.left}, ${margins.top})`);
+
+      const svg2 = d3.select("#chart2")
+        .attr("width", width + margins.right + margins.left)
+        .attr("height", height + margins.top + margins.bottom);
+
+      const chart2 = svg2.append("g")
+        .attr("transform", `translate(${margins.left}, ${margins.top})`);
+
+      const svg3 = d3.select("#chart3")
+        .attr("width", width + margins.right + margins.left)
+        .attr("height", height + margins.top + margins.bottom);
+
+      const chart3 = svg3.append("g")
+        .attr("transform", `translate(${margins.left}, ${margins.top})`);
+
+      const svg4 = d3.select("#chart4")
+        .attr("width", width4 + margins.right + margins.left + 75)
+        .attr("height", height4 + margins.top + margins.bottom);
+
+      const chart4 = svg4.append("g")
+        .attr("transform", `translate(${margins.left}, ${margins.top})`);
+/*
+      update colors
+*/
+      const update_colors = function(){
+        //[0]duration
+        //[1]album
+        //[2]wc
+        //[3]ld
+        if(radio[0].checked){
+          //data.sort(compareValues('duration_ms', 'desc'))
+          data.sort(function(a, b) {
+              return -1*(parseFloat(a.duration_ms) - parseFloat(b.duration_ms));
+          });
+          color_scale1 = d3.scaleSequential(d3.interpolateBlues)
+          color_scale1.domain([minDur, medDur, maxDur])
+          console.log(minDur, medDur, maxDur)
+          d3.selectAll(".circle").style("fill", function(d){
+              return color_scale1(d.duration_ms)
+            })
+          d3.selectAll(".bars").style("fill", function(d){
+            return color_scale1(d.AveD)
+          })
+          console.log("data")
+          console.log(data)
+        }
+        else if(radio[1].checked){
+          data.sort(function(a, b) {
+              return -1*(parseFloat(a.album_release_year) - parseFloat(b.album_release_year));
+          });
+          color_scale1 = d3.schemeBlues[9];
+          d3.selectAll(".circle").style("fill", function(d){
+              console.log(album_order[Math.trunc((d.album_release_year-2009)/2)])
+              return color_scale1[album_order[Math.trunc((d.album_release_year-2009)/2)]]
+            })
+          d3.selectAll(".bars").style("fill", function(d){
+            return color_scale1[album_order[Math.trunc((d.AveA-2009)/2)]]
+          })
+          console.log("data")
+          console.log(data)
+        }
+        else if(radio[2].checked){
+          data.sort(function(a, b) {
+              return -1*(parseFloat(a.danceability) - parseFloat(b.danceability));
+          });          color_scale1 = d3.scaleSequential(d3.interpolateBlues)
+          color_scale1.domain([minWc, medWc, maxWc])
+          d3.selectAll(".circle").style("fill", function(d){
+              return color_scale1(d.danceability)
+            })
+          d3.selectAll(".bars").style("fill", function(d){
+            return color_scale1(d.AveW)
+          })
+          console.log("data")
+          console.log(data)
+        }
+        else if(radio[3].checked){
+          data.sort(function(a, b) {
+              return -1*(parseFloat(a.lyrical_density) - parseFloat(b.lyrical_density));
+          });
+          color_scale1 = d3.scaleSequential(d3.interpolateBlues)
+          color_scale1.domain([minLd, medLd, maxLd])
+          d3.selectAll(".circle").style("fill", function(d){
+              return color_scale1(d.lyrical_density)
+            })
+          d3.selectAll(".bars").style("fill", function(d){
+            return color_scale1(d.AveL)
+          })
+          console.log("data")
+          console.log(data)
+        }
+        update_vis();
+      }
+
+/*
+  Update visualization
+*/
+      const update_vis = function(){
+      /*
+            creating histogram 1
+      */
+            let histogram1 = d3.histogram()
+              .domain(x_scale1.domain())
+              .thresholds(20)
+              .value((d) => +d.energy)
+
+            let bins1 = histogram1(data)
+
+            y_scale1.range([height, 0])
+            .domain([0, d3.max(bins1, (d) => +d.length)])
+
+            let cols1 = svg1.selectAll(".col")
+              .data(bins1);
+
+            cols1.exit().remove();
+
+            const new_cols1 = cols1.enter()
+              .append("g")
+              .attr("class", "col")
+              .attr("transform", (d)=> `translate(${margins.left+(d.x1+d.x0)/2*3}, ${height})`)
+
+            cols1 = cols1.merge(new_cols1);
+
+            let circles1 = cols1.selectAll(".circle")
+              .data((d) => d)
+
+            circles1.exit().transition().duration((d)=>200).style('opacity',0).remove();
+            //rectangles inside g example
+            const new_circles1 = circles1.enter()
+              .append("circle")
+              .attr("cy", (d, i) => -(i * 15))
+              .attr("class", "circle")
+              .attr("r", 5)
+              .style("stroke", "black")
+
+
+            circles1 = circles1.merge(new_circles1)
+
+
+      /*
+            creating histogram 2
+      */
+
+            let histogram2 = d3.histogram()
+              .domain(x_scale2.domain())
+              .thresholds(x_scale2.ticks(20))
+              .value((d) => +d.valence)
+
+            let bins2 = histogram2(data)
+
+
+            y_scale2.range([height, 0])
+              .domain([0, d3.max(bins2, (d) => +d.length)])
+
+            let cols2 = svg2.selectAll(".col")
+              .data(bins2);
+
+            cols2.exit().remove();
+
+            const new_cols2 = cols2.enter()
+              .append("g")
+              .attr("class", "col")
+              .attr("transform", (d)=> `translate(${margins.left+(d.x1+d.x0)/2*350}, ${height})`)
+
+            cols2 = cols2.merge(new_cols2);
+
+            let circles2 = cols2.selectAll(".circle")
+              .data((d) => d)
+            circles2.exit().transition().duration((d)=>200).style('opacity',0).remove();
+            //rectangles inside g example
+            const new_circles2 = circles2.enter()
+              .append("circle")
+              .attr("cy", (d, i) => -(i * 12))
+              .attr("class", "circle")
+              .attr("r", 5)
+              .style("stroke", "black")
+
+
+            circles2 = circles2.merge(new_circles2)
+
+
+      /*
+            creating histogram 3
+      */
+
+            let histogram3 = d3.histogram()
+              .domain(x_scale3.domain())
+              .thresholds(x_scale3.ticks(20))
+              .value((d) => +d.acousticness)
+
+            let bins3 = histogram3(data)
+
+            console.log("bins3")
+            console.log(bins3)
+
+            y_scale3.range([height, 0])
+              .domain([0, d3.max(bins3, (d) => +d.length)])
+
+            let cols3 = svg3.selectAll(".col")
+              .data(bins3);
+
+            cols3.exit().remove();
+
+            const new_cols3 = cols3.enter()
+              .append("g")
+              .attr("class", "col")
+              .attr("transform", (d)=> `translate(${margins.left+(d.x1+d.x0)/2*300}, ${height})`)
+
+            cols3 = cols3.merge(new_cols3);
+
+            let circles3 = cols3.selectAll(".circle")
+              .data((d) => d)
+
+            circles3.exit().transition().duration((d)=>200).style('opacity',0).remove();
+            //rectangles inside g example
+            const new_circles3 = circles3.enter()
+              .append("circle")
+              .attr("cy", (d, i) => -(i * 8))
+              .attr("class", "circle")
+              .attr("r", 3)
+              .style("stroke", "black")
+
+
+            circles3 = circles3.merge(new_circles3)
+      /*
+            bar chart
+      */
+
+            let bars4 = svg4.selectAll(".bars")
+              .data(album_data);
+
+            bars4.exit().remove();
+
+            const new_bars4 = bars4.enter()
+              .append("rect")
+              .attr("class", "bars")
+              .attr("x", 0)
+              .attr("y", 10)
+              .attr("height", y_scale4.bandwidth)
+              .attr("width", (d) => x_scale4(d.AveGI))
+              .attr("transform", (d,i) => `translate(${margins.left + 75}, ${i*20})`)
+              .style("stroke", "black")
+
+            bars4 = bars4.merge(new_bars4);
+            //update_colors()
+
+
+      /*
+            tool tips
+      */
+            circles1.on("mouseover", function(d) {
+              d3.select("#track_name").text(d.track_name)
+              d3.select("#album_name").text(d.album_name)
+              const coordinates = [d3.event.pageX, d3.event.pageY]
+              d3.select("#tooltip")
+                .style("left", (coordinates[0]+25) + "px")
+                .style("top", (coordinates[1]+25) + "px")
+                .classed("hidden", false)
+            })
+
+            circles1.on("mouseout", function(d){
+              d3.select("#tooltip")
+                .classed("hidden", true)
+            })
+
+            circles2.on("mouseover", function(d) {
+              d3.select("#track_name").text(d.track_name)
+              d3.select("#album_name").text(d.album_name)
+              const coordinates = [d3.event.pageX, d3.event.pageY]
+              d3.select("#tooltip")
+                .style("left", (coordinates[0]+25) + "px")
+                .style("top", (coordinates[1]+25) + "px")
+                .classed("hidden", false)
+            })
+
+            circles2.on("mouseout", function(d){
+              d3.select("#tooltip")
+                .classed("hidden", true)
+            })
+
+            circles3.on("mouseover", function(d) {
+              d3.select("#track_name").text(d.track_name)
+              d3.select("#album_name").text(d.album_name)
+              const coordinates = [d3.event.pageX, d3.event.pageY]
+              d3.select("#tooltip")
+                .style("left", (coordinates[0]+25) + "px")
+                .style("top", (coordinates[1]+25) + "px")
+                .classed("hidden", false)
+            })
+
+            circles3.on("mouseout", function(d){
+              d3.select("#tooltip")
+                .classed("hidden", true)
+            })
+
+      /*
+            bar graph selection
+      */
+
+            // click to add or remove data from bar array
+            bars4.on("click", function(d) {
+              let found = bar_data.find(function(list_item){
+                return d === list_item
+              })
+              if(found === undefined){
+                bar_data.push(d)
+                update_colors()
+              }
+              else{
+                bar_data = bar_data.filter((d)=>d!==found)
+              }
+
+              // color all bars if none selected
+              if(bar_data.length == 0){
+                d3.selectAll(".bars").classed("deselected", false)
+                data = dataset;
+                update_colors()
+              }
+
+              // color only selected bars
+              else{
+                d3.selectAll(".bars").classed("deselected", function(d){
+                  let found1 = bar_data.find(function(list_item1){
+                    return d === list_item1
+                  })
+                  // if not in bar_data, turn gray
+                  if(found1 === undefined){
+                    return true
+                  }
+                  // otherwise turn blue
+                  else{
+                    return false
+                  }
+                })
+              }
+              console.log("bar data")
+              console.log(bar_data)
+              console.log("data")
+              console.log(data)
+              update_data()
+              update_vis()
+              update_colors()
+              update_colors()
+            })
+      /*
+            brush: selection and filtering
+      */
+            const brush = d3.brushX().extent([[0,0], [width,height]]);
+            let extent
+
+            chart1.on("mouseover", function(){
+              // brush selections
+              brush.on("brush", function(){
+                extent = d3.event.selection
+                if(extent==null){
+                  d3.selectAll("circle").classed("deselected", false)
+                }
+                else{
+                  x_extent = extent.map(x_scale1.invert)
+                  d3.selectAll(".circle").classed("deselected", function(d){
+                      return (+d.energy < d3.min(x_extent) || +d.energy > d3.max(x_extent))
+                    })
+                }
+              })
+
+              // clear old brushes
+              brush.on("start", function(){
+                if(d3.event.sourceEvent.type === "mousedown"){
+                  d3.selectAll('.brush').call(brush.move, null)
+                }
+              })
+            })
+
+            chart2.on("mouseover", function(){
+              // brush selections
+              brush.on("brush", function(){
+                extent = d3.event.selection
+                if(extent==null){
+                  d3.selectAll("circle").classed("deselected", false)
+                }
+                else{
+                  x_extent = extent.map(x_scale2.invert)
+                  d3.selectAll(".circle").classed("deselected", function(d){
+                      return (+d.valence < d3.min(x_extent) || +d.valence > d3.max(x_extent))
+                    })
+                }
+              })
+
+              // clear old brushes
+              brush.on("start", function(){
+                if(d3.event.sourceEvent.type === "mousedown"){
+                  d3.selectAll('.brush').call(brush.move, null)
+                }
+              })
+            })
+
+            chart3.on("mouseover", function(){
+              // brush selections
+              brush.on("brush", function(){
+                extent = d3.event.selection
+                if(extent==null){
+                  d3.selectAll("circle").classed("deselected", false)
+                }
+                else{
+                  x_extent = extent.map(x_scale3.invert)
+                  d3.selectAll(".circle").classed("deselected", function(d){
+                      return (+d.acousticness < d3.min(x_extent) || +d.acousticness > d3.max(x_extent))
+                    })
+                }
+              })
+
+              // clear old brushes
+              brush.on("start", function(){
+                if(d3.event.sourceEvent.type === "mousedown"){
+                  d3.selectAll('.brush').call(brush.move, null)
+                }
+              })
+            })
+
+
+            // add brushes to charts
+            chart1.append("g")
+              .attr("class", "brush")
+              .call(brush)
+            chart2.append("g")
+              .attr("class", "brush")
+              .call(brush)
+            chart3.append("g")
+              .attr("class", "brush")
+              .call(brush)
+      }
+      // update data when clicking on album bars
+      const update_data = function(){
+        if(bar_data.length == 0){
+          data = dataset;
+        }
+        else{
+          data = [];
+          for(let i = 0; i < bar_data.length; i++){
+            data = data.concat(dataset.filter((d)=> d.album_name === bar_data[i].Name))
+          }
+        }
+        console.log("data")
+        console.log(data)
+      }
+      update_vis()
+      update_colors()
+      update_colors()
+
+/*
+      axe 1
+*/
+      const x_axis1 = chart1.append("g")
+        .attr("transform", `translate(0, ${300})`)
+        .call(d3.axisBottom(x_scale1));
+
+      const y_axis1 = chart1.append("g")
+        .call(d3.axisLeft(y_scale1));
+
+      chart1.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('transform', `translate(${width/2}, ${height+3*margins.bottom/4})`)
+        .attr("font-family","sans-serif")
+        .attr("font-size", "14px")
+        .text('Energy Index');
+
+      chart1.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('transform', `translate(${-3*margins.left/4}, ${height/2}) rotate(-90)`)
+        .attr("font-family","sans-serif")
+        .attr("font-size", "14px")
+        .text('Count');
+  /*
+      axes 2
+  */
+      const x_axis2 = chart2.append("g")
+        .attr("transform", `translate(0, ${300})`)
+        .call(d3.axisBottom(x_scale2));
+
+      const y_axis2 = chart2.append("g")
+        .call(d3.axisLeft(y_scale2));
+
+      chart2.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('transform', `translate(${width/2}, ${height+3*margins.bottom/4})`)
+        .attr("font-family","sans-serif")
+        .attr("font-size", "14px")
+        .text('Valence');
+
+      chart2.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('transform', `translate(${-3*margins.left/4}, ${height/2}) rotate(-90)`)
+        .attr("font-family","sans-serif")
+        .attr("font-size", "14px")
+        .text('Count');
+
+  /*
+      axes 3
+  */
+      const x_axis3 = chart3.append("g")
+        .attr("transform", `translate(0, ${300})`)
+        .call(d3.axisBottom(x_scale3));
+
+      const y_axis3 = chart3.append("g")
+        .call(d3.axisLeft(y_scale3));
+
+      chart3.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('transform', `translate(${width/2}, ${height+3*margins.bottom/4})`)
+        .attr("font-family","sans-serif")
+        .attr("font-size", "14px")
+        .text('Acousticness');
+
+      chart3.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('transform', `translate(${-3*margins.left/4}, ${height/2}) rotate(-90)`)
+        .attr("font-family","sans-serif")
+        .attr("font-size", "14px")
+        .text('Count');
+  /*
+      axes 4
+  */
+      svg4.append('g')
+        .attr('transform', `translate(${margins.left + 75}, ${height4+margins.bottom/4 })`)
+        .call(d3.axisBottom(x_scale4));
+
+      svg4.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('transform', `translate(${width4/2 + 75 + margins.left}, ${height4+margins.bottom})`)
+        .attr("font-family","sans-serif")
+        .attr("font-size", "14px")
+        .text('Average "Energy" Index');
+
+      svg4.append('g')
+        .attr('transform', `translate(${margins.left + 75}, ${margins.bottom/8})`)
+        .call(d3.axisLeft(y_scale4));
+
+
+      })
+    </script>
+</body>
+</html>
