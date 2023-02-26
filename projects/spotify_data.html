@@ -298,7 +298,7 @@
       */
             let histogram1 = d3.histogram()
               .domain(x_scale1.domain())
-              .thresholds(20)
+              .thresholds(x_scale1.ticks(20))
               .value((d) => +d.energy)
 
             let bins1 = histogram1(data)
@@ -357,7 +357,7 @@
             const new_cols2 = cols2.enter()
               .append("g")
               .attr("class", "col")
-              .attr("transform", (d)=> `translate(${margins.left+(d.x1+d.x0)/2*350}, ${height})`)
+              .attr("transform", (d)=> `translate(${margins.left+(d.x1+d.x0)/2*300}, ${height})`)
 
             cols2 = cols2.merge(new_cols2);
 
